@@ -302,6 +302,8 @@ def show_help(message):
  To See Admin Commands:
  /admincmd : Shows All Admin Commands.
 
+Buy From :- @fedora32
+
 """
     for handler in bot.message_handlers:
         if hasattr(handler, "commands"):
@@ -319,7 +321,7 @@ def welcome_start(message):
     user_name = message.from_user.first_name
     response = f"""👋🏻Welcome to Your Home, {user_name}! Feel Free to Explore.
 Try To Run This Command : /help
-Join :- t.me/@fedora32"""
+Contact :- t.me/@fedora32"""
     bot.reply_to(message, response)
 
 
