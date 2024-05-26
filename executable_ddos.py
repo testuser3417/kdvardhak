@@ -296,6 +296,7 @@ def show_help(message):
     help_text = """🤖 Available commands:
  /bgmi : Method For Bgmi Servers.
  /rules : Please Check Before Use !!.
+ /tips : Some tips to improve experience. !!.
  /mylogs : To Check Your Recents Attacks.
  /plan : Checkout Our Botnet Rates.
 
@@ -333,6 +334,17 @@ def welcome_rules(message):
 1. Dont Run Too Many Attacks !! Cause A Ban From Bot
 2. Dont Run 2 Attacks At Same Time Becz If U Then U Got Banned From Bot.
 3. We Daily Checks The Logs So Follow these rules to avoid Ban!!"""
+    bot.reply_to(message, response)
+
+
+@bot.message_handler(commands=["tips"])
+def welcome_tips(message):
+    user_name = message.from_user.first_name
+    response = f"""{user_name} Some tips for Ddos:
+
+1. Pretype /bgmi 180 in the kdvardhak bot
+2. Try to send command as soon as possible after reaching island.
+3. Avoid plane routes ending at water."""
     bot.reply_to(message, response)
 
 
