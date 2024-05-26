@@ -297,8 +297,8 @@ def show_help(message):
  /bgmi : Method For Bgmi Servers.
  /rules : Please Check Before Use !!.
  /tips : Some tips to improve experience. !!.
- /mylogs : To Check Your Recents Attacks.
- /plan : Checkout Our Botnet Rates.
+ /mylogs : Check Your Recents Attacks.
+ /plan : Checkout Ddos Service Pricing.
 
  To See Admin Commands:
  /admincmd : Shows All Admin Commands.
@@ -397,9 +397,9 @@ def broadcast_message(message):
                         print(
                             f"Failed to send broadcast message to user {user_id}: {str(e)}"
                         )
-            response = "Broadcast Message Sent Successfully To All Users 👍."
+            response = "Broadcast Message Sent Successfully To All Users ."
         else:
-            response = "🤖 Please Provide A Message To Broadcast."
+            response = "Please Provide A Message To Broadcast."
     else:
         response = "Only Admin Can Run This Command ."
 
