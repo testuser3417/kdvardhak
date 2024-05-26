@@ -234,9 +234,9 @@ def handle_bgmi(message):
             # Check if the user has run the command before and is still within the cooldown period
             if (
                 user_id in bgmi_cooldown
-                and (datetime.datetime.now() - bgmi_cooldown[user_id]).seconds < 300
+                and (datetime.datetime.now() - bgmi_cooldown[user_id]).seconds < 10
             ):
-                response = "You Are On Cooldown . Please Wait 5min Before Running The /bgmi Command Again."
+                response = "You Are On Cooldown . Please Wait 10 seconds Before Running The /bgmi Command Again."
                 bot.reply_to(message, response)
                 return
             # Update the last time the user ran the command
