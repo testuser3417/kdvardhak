@@ -261,9 +261,7 @@ def handle_bgmi(message):
                     f"BGMI Attack Finished. Target: {target} Port: {port} Port: {time}"
                 )
         else:
-            response = (
-                "✅ Usage :- /bgmi <target> <port> <time>"  # Updated command syntax
-            )
+            response = "✅ Usage :- /bgmi <target> <port> <time(in seconds)>"  # Updated command syntax
     else:
         response = " You Are Not Authorized To Use This Command ."
 
@@ -351,9 +349,9 @@ def welcome_tips(message):
 @bot.message_handler(commands=["plan"])
 def welcome_plan(message):
     user_name = message.from_user.first_name
-    response = f"""{user_name}, Brother Only 1 Plan Is Powerfull Then Any Other Ddos !!:
+    response = f"""Dear {user_name}, I am offering affordable Ddos with great pricing. !!:
 
-Vip  :
+Subscription Rates :
 -> Attack Time : 180 (S)
 > After Attack Limit : 5 Min
 -> Concurrents Attack : 3
