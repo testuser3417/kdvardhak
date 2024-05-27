@@ -393,9 +393,8 @@ def welcome_tips(message):
     user_name = message.from_user.first_name
     response = f"""{user_name} Some tips for Ddos:
 
-1. Pretype /bgmi 180 in the kdvardhak bot
-2. Try to send command as soon as possible after reaching island.
-3. Avoid plane routes ending at water."""
+1. Try to send command as soon as the plane stars .
+2. Avoid plane routes ending at water."""
     bot.reply_to(message, response)
 
 
