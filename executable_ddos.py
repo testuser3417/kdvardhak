@@ -309,6 +309,17 @@ def check_process_with_bgmi():
         return False
 
 
+# Handler to check if a process is already going on
+@bot.message_handler(commands=["check_server"])
+def handle_server_free_test(message):
+    if check_process_with_bgmi():
+        response = "Please Wait a while the ongoing attack is finished."
+    else:
+        response = "You can start the Ddos."
+
+    bot.reply_to(message, response)
+
+
 # Add /mylogs command to display logs recorded for bgmi and website commands
 @bot.message_handler(commands=["mylogs"])
 def show_command_logs(message):
@@ -338,6 +349,7 @@ def show_help(message):
  /tips : Some tips to improve experience. !!.
  /mylogs : Check Your Recents Attacks.
  /plan : Checkout Ddos Service Pricing.
+ /check_server : Check if server is free for ddos(Highly Recommended).
 
  To See Admin Commands:
  /admincmd : Shows All Admin Commands.
