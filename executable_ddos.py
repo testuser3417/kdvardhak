@@ -393,7 +393,7 @@ def welcome_tips(message):
     user_name = message.from_user.first_name
     response = f"""{user_name} Some tips for Ddos:
 
-1. Try to send command as soon as the plane stars .
+1. Try to send command 7-10 seconds before plane arrival .
 2. Avoid plane routes ending at water."""
     bot.reply_to(message, response)
 
