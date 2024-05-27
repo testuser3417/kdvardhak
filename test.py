@@ -271,30 +271,35 @@ def handle_bgmi(message):
 
 # Handler to stop the process
 @bot.message_handler(commands=["stop"])
-def kill_processes_with_bgmi(message):
-    # Get all process IDs that have 'bgmi' in the command
-    cmd_ps = f"pgrep -f bgmi"
-    output = subprocess.check_output(shlex.split(cmd_ps))
-    pids = output.decode().split()
+def kill_processes_with_bgmi():
+    # Get the process tree that have 'bgmi' in the command
+    cmd_pstree = f"pstree -p | grep bgmi"
+    output = subprocess.check_output(shlex.split(cmd_pstree), shell=True)
+    lines = output.decode().split("\n")
 
-    # Kill all the processes
+    pids = []
+    for line in lines:
+        if "bgmi" in line:
+            parts = line.split()
+            for part in parts:
+                if "bgmi" in part:
+                    pid = part.split("(")[1].split(")")[0]
+                    pids.append(pid)
+
+    # Kill all the processes and threads
     for pid in pids:
         cmd_kill = f"kill -9 {pid}"
         subprocess.run(shlex.split(cmd_kill))
-        response = "The process has been stopped."
-    else:
-        response = "No process is currently running."
-
-    bot.reply_to(message, response)
 
 
 def check_process_with_bgmi():
-    # Get all process IDs that have 'bgmi' in the command
-    cmd_ps = f"pgrep -f bgmi"
-    output = subprocess.check_output(shlex.split(cmd_ps))
-    pids = output.decode().split()
-
-    return len(pids) > 0
+    cmd_ps = "pgrep -f bgmi"
+    try:
+        output = subprocess.check_output(shlex.split(cmd_ps))
+        pids = output.decode().split()
+        return len(pids) > 0
+    except subprocess.CalledProcessError:
+        return False
 
 
 # Handler to check if a process is already going on
