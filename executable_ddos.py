@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import shlex
 import telebot
 import subprocess
 import requests
@@ -268,6 +269,46 @@ def handle_bgmi(message):
     bot.reply_to(message, response)
 
 
+# Handler to stop the process
+@bot.message_handler(commands=["stop_ongoing"])
+def kill_processes_with_bgmi(message):
+    user_id = str(message.chat.id)
+    if user_id in admin_id:
+        # Get the process tree that have 'bgmi' in the command
+        cmd_pstree = "pstree -p | grep bgmi"
+        output = subprocess.check_output(shlex.split(cmd_pstree), shell=True)
+        lines = output.decode().split("\n")
+
+        pids = []
+        for line in lines:
+            if "bgmi" in line:
+                parts = line.split()
+                for part in parts:
+                    if "bgmi" in part:
+                        pid = part.split("(")[1].split(")")[0]
+                        pids.append(pid)
+
+        # Kill all the processes and threads
+        if pids:
+            for pid in pids:
+                cmd_kill = f"kill -9 {pid}"
+                subprocess.run(shlex.split(cmd_kill))
+
+            bot.reply_to(message, "All attacks have been stopped successfully.")
+        else:
+            bot.reply_to(message, "No attack is ongoing.")
+
+
+def check_process_with_bgmi():
+    cmd_ps = "pgrep -f bgmi"
+    try:
+        output = subprocess.check_output(shlex.split(cmd_ps))
+        pids = output.decode().split()
+        return len(pids) > 0
+    except subprocess.CalledProcessError:
+        return False
+
+
 # Add /mylogs command to display logs recorded for bgmi and website commands
 @bot.message_handler(commands=["mylogs"])
 def show_command_logs(message):
@@ -375,6 +416,7 @@ def welcome_plan(message):
  /logs : All Users Logs.
  /broadcast : Broadcast a Message.
  /clearlogs : Clear The Logs File.
+ /stop_ongoing: Stop all the ongoing processes.
 """
     bot.reply_to(message, response)
 
