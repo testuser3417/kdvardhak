@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import psutil
 import shlex
 import telebot
 import subprocess
@@ -275,28 +276,17 @@ def kill_processes_with_bgmi(message):
     user_id = str(message.chat.id)
     if user_id in admin_id:
         # Get the process tree that have 'bgmi' in the command
-        cmd_pstree = "ps -e"
-        output = subprocess.check_output(shlex.split(cmd_pstree), shell=True)
-        lines = output.decode().split("\n")
+        for proc in psutil.process_iter(["pid", "cmdline"]):
+            if proc.info["cmdline"] and "bgmi" in proc.info["cmdline"]:
+                # Kill all threads in the process
+                parent = psutil.Process(proc.info["pid"])
+                for child in parent.children(recursive=True):
+                    child.kill()
+                parent.kill()
 
-        pids = []
-        for line in lines:
-            if "bgmi" in line:
-                parts = line.split()
-                for part in parts:
-                    if "bgmi" in part:
-                        pid = parts[0]
-                        pids.append(pid)
-
-        # Kill all the processes and threads
-        if pids:
-            for pid in pids:
-                cmd_kill = f"kill -9 {pid}"
-                subprocess.run(shlex.split(cmd_kill))
-
-            bot.reply_to(message, "All attacks have been stopped successfully.")
-        else:
-            bot.reply_to(message, "No attack is ongoing.")
+        bot.reply_to(message, "All attacks have been stopped successfully.")
+    else:
+        bot.reply_to(message, "No attack is ongoing.")
 
 
 def check_process_with_bgmi():
