@@ -275,7 +275,7 @@ def kill_processes_with_bgmi(message):
     user_id = str(message.chat.id)
     if user_id in admin_id:
         # Get the process tree that have 'bgmi' in the command
-        cmd_pstree = "pstree -p | grep bgmi"
+        cmd_pstree = "ps -e"
         output = subprocess.check_output(shlex.split(cmd_pstree), shell=True)
         lines = output.decode().split("\n")
 
@@ -285,7 +285,7 @@ def kill_processes_with_bgmi(message):
                 parts = line.split()
                 for part in parts:
                     if "bgmi" in part:
-                        pid = part.split("(")[1].split(")")[0]
+                        pid = parts[0]
                         pids.append(pid)
 
         # Kill all the processes and threads
