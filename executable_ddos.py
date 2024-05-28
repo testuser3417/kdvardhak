@@ -412,6 +412,8 @@ Pr-ice List :
 Day-->100 Rs
 Week-->700 Rs
 Month-->1500 Rs
+Contact :- t.me/@fedora32 to buy.
+
 """
     bot.reply_to(message, response)
 
