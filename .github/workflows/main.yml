@@ -1,49 +1,26 @@
 name: Build and Test
+
 on: workflow_dispatch
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
 
-      - name: Give execute permission to bgmi
-        run: chmod +x bgmi
+    - name: Give execute permission to bgmi
+      run: chmod +x bgmi
 
-      - name: Run executable_ddos.py
-        id: test
-        run: python executable_ddos.py
-        continue-on-error: true
-  
-  rerun:
-    needs: build
-    if: always() && steps.test.outcome == 'failure'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-
-      - name: Give execute permission to bgmi
-        run: chmod +x bgmi
-
-      - name: Rerun executable_ddos.py
-        run: python executable_ddos.py
+    - name: Run executable_ddos.py
+      run: python executable_ddos.py
